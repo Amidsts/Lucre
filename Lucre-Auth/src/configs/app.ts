@@ -1,7 +1,9 @@
 import express, { Application, NextFunction, Response, Request } from "express";
 import cors from "cors";
 import helmet from "helmet";
+
 import { responseHandler } from "../utils/response";
+import AuthRouter from "../routes";
 
 const app: Application = express();
 const initializeMiddleware = () => {
@@ -34,6 +36,8 @@ const initializeRoute = () => {
     responseHandler({ res, message: "Welcome to Lucre, Lets get started!" });
   });
 
+  app.use("/v1/auth", AuthRouter);
+  
   app.all("*", (_req, res: Response) => {
     responseHandler({
       res,
