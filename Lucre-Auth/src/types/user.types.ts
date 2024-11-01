@@ -1,6 +1,6 @@
 import { Document } from "mongoose";
 
-export interface IAuth extends Document {
+export interface IUser extends Document {
   firstName: string;
   lastName: string;
   fullName: string;
@@ -9,4 +9,6 @@ export interface IAuth extends Document {
   password: string;
   address: string;
   dateOfBirth: string;
+  kycVerified: boolean;
+  comparePassword?: (password: string) => Promise<boolean>;
 }

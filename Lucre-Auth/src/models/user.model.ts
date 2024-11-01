@@ -1,8 +1,8 @@
 import { model, Schema } from "mongoose";
 import bcrypt from "bcrypt";
-import { IAuth } from "../types/auth.types";
+import { IUser } from "../types/user.types";
 
-const authSchema = new Schema<IAuth>(
+const userSchema = new Schema<IUser>(
   {
     firstName: String,
     lastName: String,
@@ -12,6 +12,7 @@ const authSchema = new Schema<IAuth>(
     password: String,
     address: String,
     dateOfBirth: String,
+    kycVerified: Boolean,
   },
   {
     timestamps: true,
@@ -27,7 +28,7 @@ const authSchema = new Schema<IAuth>(
   }
 );
 
-authSchema.pre("save", async function (next) {
+userSchema.pre("save", async function (next) {
   if (this.isModified("password")) {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
@@ -35,9 +36,9 @@ authSchema.pre("save", async function (next) {
   next();
 });
 
-authSchema.methods.comparePassword = async function (Password: string) {
+userSchema.methods.comparePassword = async function (Password: string) {
   return await bcrypt.compare(Password, this.password);
 };
 
-const AuthModel = model<IAuth>("Auth", authSchema);
-export default AuthModel;
+const UserModel = model<IUser>("User", userSchema);
+export default UserModel;

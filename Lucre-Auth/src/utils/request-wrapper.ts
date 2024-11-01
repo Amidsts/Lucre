@@ -1,9 +1,10 @@
 import { Request, Response, NextFunction } from "express";
+import { ClientSession } from "mongoose";
 
 export async function asyncWrapper(
   callback: () => Promise<Response> | Response | any,
-  res: Response,
-  next?: NextFunction
+  next: NextFunction,
+  session?: ClientSession
 ) {
   try {
     const result = await callback();
@@ -37,6 +38,10 @@ export async function asyncWrapper(
     //   }
     // }
 
+    if (session) {
+      await session.abortTransaction();
+      await session.endSession();
+    }
     return next(err);
   }
 }

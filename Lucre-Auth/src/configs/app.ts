@@ -3,7 +3,7 @@ import cors from "cors";
 import helmet from "helmet";
 
 import { responseHandler } from "../utils/response";
-import AuthRouter from "../routes";
+import UserRouter from "../routes";
 
 const app: Application = express();
 const initializeMiddleware = () => {
@@ -30,13 +30,12 @@ const initializeMiddleware = () => {
 };
 
 const initializeRoute = () => {
-  // app.use("/v1/auth")
 
   app.get("/", (req: Request, res: Response) => {
     responseHandler({ res, message: "Welcome to Lucre, Lets get started!" });
   });
 
-  app.use("/v1/auth", AuthRouter);
+  app.use("/v1/auth", UserRouter);
   
   app.all("*", (_req, res: Response) => {
     responseHandler({
