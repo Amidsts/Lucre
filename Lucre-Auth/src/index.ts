@@ -3,6 +3,7 @@ import appConfigs from "./configs";
 import app from "./configs/app";
 import connectDB from "./configs/persistent/db";
 import connectRedis from "./configs/persistent/redis";
+import logger from "./configs/logger";
 
 (async () => {
   let server: any;
@@ -10,18 +11,18 @@ import connectRedis from "./configs/persistent/redis";
     await connectDB();
     await connectRedis();
     server = app.listen(appConfigs.port, () => {
-      console.log(`Server is running on port ${appConfigs.port}`);
+      logger.info(`Server is running on port ${appConfigs.port}`);
     });
 
     const gracefulShutdown = () => {
-      console.log("Received server kill signal, shutting down gracefully.");
+      logger.info("Received server kill signal, shutting down gracefully.");
 
       server.close(async () => {
         try {
           await mongoose.disconnect();
-          console.log("Closed database connections.");
+          logger.info("Closed database connections.");
         } catch (err) {
-          console.log("Error closing connections", err);
+          logger.info("Error closing connections", err);
         } finally {
           process.exit(0);
         }
@@ -32,15 +33,15 @@ import connectRedis from "./configs/persistent/redis";
       .on("SIGINT", gracefulShutdown)
       .on("SIGTERM", gracefulShutdown)
       .on("unhandledRejection", (error) => {
-        console.log("unhandledRejection Signal: ", error);
+        logger.info("unhandledRejection Signal: ", error);
         gracefulShutdown();
       })
       .on("uncaughtException", (error) => {
-        console.log("uncaughtException Signal: ", error);
+        logger.info("uncaughtException Signal: ", error);
         gracefulShutdown();
       });
   } catch (error) {
-    console.log(error);
+    logger.error(error.message);
     process.exit(0);
   }
 })();

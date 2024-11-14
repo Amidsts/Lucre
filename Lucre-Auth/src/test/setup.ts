@@ -1,8 +1,5 @@
-import mongoose, {
-  connect,
-  disconnect,
-  ClientSession,
-} from "mongoose";
+import mongoose, { connect, disconnect, ClientSession } from "mongoose";
+import logger from "../configs/logger";
 
 export const session = {
   startTransaction: jest.fn(),
@@ -13,10 +10,10 @@ export const session = {
 } as unknown as ClientSession;
 
 beforeAll(async () => {
-  console.log("Testing.........");
+  logger.info("Testing.........");
 
   await connect(process.env.MONGO_URI);
-  console.log("connected test db");
+  logger.info("connected test db");
 });
 
 beforeEach(() => {
@@ -35,5 +32,3 @@ afterEach(async () => {
 afterAll(async () => {
   await disconnect();
 });
-
-

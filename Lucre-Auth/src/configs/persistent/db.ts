@@ -1,5 +1,6 @@
 import mongoose, { ConnectOptions } from "mongoose";
 import appConfigs from "..";
+import logger from "../logger";
 
 async function connectDB(): Promise<void> {
   const options = {
@@ -9,15 +10,14 @@ async function connectDB(): Promise<void> {
   try {
     await mongoose.connect(appConfigs.mongoDbUri, options);
 
-    console.log("Connected to Database");
+    logger.info("Connected to Database");
   } catch (error) {
-    console.log("Error connecting to database:", error);
-    process.exit(1);
+    throw Error(`Error connecting to database: ${error.message}`);
   }
 
   // Listen for errors after the initial connection
   mongoose.connection.on("error", (error) => {
-    console.log("Database error:" + error, "error");
+    throw Error(`Database error: ${error.message}`);
   });
 }
 

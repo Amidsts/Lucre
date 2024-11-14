@@ -1,11 +1,15 @@
 import { createClient } from "redis";
+import logger from "../../logger";
 
 async function connectRedis() {
   try {
     await createClient().connect();
-    console.log("connected to Redis!");
+    logger.error("connected to Redis!");
   } catch (error) {
-    console.log("Redis Client Error", error);
+    if (error.code === "ECONNREFUSED")
+      throw Error("Error cnnecting to Redis default port");
+
+    throw Error(error.message);
   }
 }
 
