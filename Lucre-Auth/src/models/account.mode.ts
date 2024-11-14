@@ -3,7 +3,7 @@ import { IAccount } from "../types/account.types";
 
 const accountSchema = new Schema<IAccount>(
   {
-    User: { types: Schema.Types.ObjectId, ref: "User" },
+    User: { type: Schema.Types.ObjectId, ref: "User" },
     accountNo: { type: String, required: true, unique: true },
     balance: { type: Number, default: 0 },
   },

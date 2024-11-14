@@ -18,44 +18,48 @@ async function signUp(req: Request, res: Response, next: NextFunction) {
     dateOfBirth,
   } = req.body;
 
-  return asyncWrapper(async () => {
-    const session = await startSession();
-    session.startTransaction();
+  const session = await startSession();
+  session.startTransaction();
 
-    let user = await UserModel.findOne({ email }).session(session);
-    if (user) throw new ConflictError("Account already exists");
+  return asyncWrapper(
+    async () => {
+      let user = await UserModel.findOne({ email });
+      if (user) throw new ConflictError("Account already exists");
 
-    user = await new UserModel({
-      firstName,
-      lastName,
-      fullName: `${firstName} ${lastName}`,
-      phoneNo,
-      email,
-      password,
-      address,
-      dateOfBirth,
-    }).save({ session });
+      user = await new UserModel({
+        firstName,
+        lastName,
+        fullName: `${firstName} ${lastName}`,
+        phoneNo,
+        email,
+        password,
+        address,
+        dateOfBirth,
+      }).save({ session });
 
-    /** IMPLEMENT KYC
-     * 1) Document verification (options: passport, driver’s license, or national ID card.)
-     * 2) Selfie verification
-     * 3) Proof of Address ( using Documents like: utility bills or bank statements.
-     */
+      /** IMPLEMENT KYC
+       * 1) Document verification (options: passport, driver’s license, or national ID card.)
+       * 2) Selfie verification
+       * 3) Proof of Address ( using Documents like: utility bills or bank statements.
+       */
 
-    await new AccountModel({
-      User: user.id,
-      accountNo: generateAccountNumber(),
-    }).save({ session });
+      await new AccountModel({
+        User: user.id,
+        accountNo: generateAccountNumber(),
+      }).save({ session });
 
-    //publish an onboarding event (this ensure the notification service is aware and send welcome email notification to the user)
-    return responseHandler({
-      res,
-      data: user,
-      message: "success",
-      status: 201,
-      session,
-    });
-  }, next);
+      //publish an onboarding event (this ensure the notification service is aware and send welcome email notification to the user)
+      return responseHandler({
+        res,
+        data: user,
+        message: "success",
+        status: 201,
+        session,
+      });
+    },
+    next,
+    session
+  );
 }
 
 export default signUp;

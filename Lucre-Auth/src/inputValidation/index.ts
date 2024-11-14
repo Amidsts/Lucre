@@ -22,7 +22,6 @@ const validateInput =
 
         next();
       },
-      res,
       next
     );
   };

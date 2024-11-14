@@ -1,17 +1,17 @@
 import { Response } from "express";
 import { handleResponseArgType } from "./types";
 
-export const responseHandler = ({
+export const responseHandler = async ({
   res,
   data,
   message,
   status = 200,
   session,
-}: handleResponseArgType): Response => {
-  //   if (session) {
-  //     await session.commitTransaction();
-  //     session.endSession();
-  //   }
+}: handleResponseArgType): Promise<Response> => {
+  if (session) {
+    await session.commitTransaction();
+    session.endSession();
+  }
 
   return res.status(status).json({
     message,

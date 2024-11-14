@@ -4,21 +4,25 @@
   "main": "index.js",
   "scripts": {
     "build": "rm -rf ./dist && tsc",
-    "dev": "ts-node-dev --transpile-only --respawn --exit-child --clear  src/index.ts"
+    "dev": "ts-node-dev --transpile-only --respawn --exit-child --clear  src/index.ts",
+    "test": "jest --watchAll --no-cache --runInBand"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@types/jest": "^29.5.14",
     "@types/node": "^22.7.9",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
     "helmet": "^7.1.0",
+    "jest": "^29.7.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.7.0",
+    "ts-jest": "^29.2.5",
     "zod": "^3.23.8"
   },
   "devDependencies": {
@@ -28,5 +32,14 @@
     "@types/jsonwebtoken": "^9.0.7",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.6.2"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "setupFilesAfterEnv": [
+      "./src/test/setup.ts"
+    ],
+    "setupFiles": [
+      "./src/test/jest.setup.ts"
+    ]
   }
 }
