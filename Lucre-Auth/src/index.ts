@@ -1,12 +1,14 @@
 import mongoose from "mongoose";
 import appConfigs from "./configs";
 import app from "./configs/app";
-import connectDB from "./configs/db";
+import connectDB from "./configs/persistent/db";
+import connectRedis from "./configs/persistent/redis";
 
 (async () => {
   let server: any;
   try {
     await connectDB();
+    await connectRedis();
     server = app.listen(appConfigs.port, () => {
       console.log(`Server is running on port ${appConfigs.port}`);
     });

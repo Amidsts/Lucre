@@ -1,5 +1,5 @@
 import mongoose, { ConnectOptions } from "mongoose";
-import appConfigs from ".";
+import appConfigs from "..";
 
 async function connectDB(): Promise<void> {
   const options = {
@@ -9,7 +9,7 @@ async function connectDB(): Promise<void> {
   try {
     await mongoose.connect(appConfigs.mongoDbUri, options);
 
-    console.log("Database connected");
+    console.log("Connected to Database");
   } catch (error) {
     console.log("Error connecting to database:", error);
     process.exit(1);

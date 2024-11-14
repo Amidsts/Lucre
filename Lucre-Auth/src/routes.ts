@@ -3,19 +3,26 @@ import validateInput from "./inputValidation";
 import { signupInputData } from "./inputValidation/signup-validation";
 import signUp from "./controllers/signup";
 import signIn from "./controllers/signin";
-import forgotPassword from "./controllers/forgot-password";
+import sendOtp from "./controllers/forgot-password";
 import { changePasswordInputData } from "./inputValidation/change-password-valdation";
 import changePassword from "./controllers/change-password";
 import validateToken from "./middlewares/validateToken";
 import { editProfileInputData } from "./inputValidation/edit-profile-validation";
 import editProfile from "./controllers/edit-profile";
 import retriveProfile from "./controllers/get-profile";
+import { signinInputData } from "./inputValidation/signin-validation";
+import { forgotPasswordInputData } from "./inputValidation/forgot-password-validation";
 
 const router = Router();
 
 router.post("/signup", validateInput(signupInputData), signUp);
-router.post("/signin", validateInput(signupInputData), signIn);
-router.post("/forgot-password", validateInput(signupInputData), forgotPassword);
+router.post("/signin", validateInput(signinInputData), signIn);
+router.post(
+  "/forgot-password",
+  validateInput(forgotPasswordInputData),
+  sendOtp
+);
+router.post("/resend-forgotpassword-otp", validateInput(forgotPasswordInputData), sendOtp);
 
 router.use(validateToken);
 

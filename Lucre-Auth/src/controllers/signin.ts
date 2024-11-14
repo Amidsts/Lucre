@@ -10,7 +10,7 @@ function signIn(req: Request, res: Response, next: NextFunction) {
 
   return asyncWrapper(async () => {
     let user = await UserModel.findOne({ email });
-    if (!user) throw new BadRequestError("Invalid credential");
+    if (!user) throw new BadRequestError("Invalid credentials");
 
     if (!(await user.comparePassword(password)))
       throw new BadRequestError("Invalid credentials");

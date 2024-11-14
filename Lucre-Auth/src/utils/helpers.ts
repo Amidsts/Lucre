@@ -15,7 +15,7 @@ export function generateAccountNumber() {
 }
 
 export function generateToken(payload: IToken) {
-  jwt.sign(payload, accessTokenSecret, {
+  return jwt.sign(payload, accessTokenSecret, {
     expiresIn: accessTokenLifeSpan,
     issuer: "Lucre",
   });
