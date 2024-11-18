@@ -1,0 +1,9 @@
+@server= http://localhost:1000
+
+#### forgot password
+POST {{server}}/v1/auth/forgot-password
+Content-Type: application/json
+
+{
+    "email": "email@email.com"
+}

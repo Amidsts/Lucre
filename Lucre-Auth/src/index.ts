@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import appConfigs from "./configs";
 import app from "./configs/app";
 import connectDB from "./configs/persistent/db";
-import connectRedis from "./configs/persistent/redis";
+import connectRedis from "./configs/persistent/redis/redis";
 import logger from "./configs/logger";
 
 (async () => {

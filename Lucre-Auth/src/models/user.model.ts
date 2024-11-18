@@ -25,6 +25,15 @@ const userSchema = new Schema<IUser>(
         delete ret.password;
       },
     },
+    toObject: {
+      transform(_doc, ret) {
+        ret.id = ret._id;
+        ret.version = ret.__v;
+        delete ret._id;
+        delete ret.__v;
+        delete ret.password;
+      },
+    },
   }
 );
 

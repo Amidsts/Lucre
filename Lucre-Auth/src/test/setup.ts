@@ -1,6 +1,6 @@
 import mongoose, { connect, disconnect, ClientSession } from "mongoose";
 import logger from "../configs/logger";
-import connectRedis from "../configs/persistent/redis";
+import connectRedis from "../configs/persistent/redis/redis";
 
 export const session = {
   startTransaction: jest.fn(),

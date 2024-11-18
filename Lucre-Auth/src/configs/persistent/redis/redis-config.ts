@@ -1,4 +1,5 @@
-import connectRedis from ".";
+import connectRedis from "./redis";
+import logger from "../../logger";
 
 const { Client } = connectRedis;
 
