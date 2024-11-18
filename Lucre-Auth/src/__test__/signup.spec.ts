@@ -6,6 +6,7 @@ import UserModel from "../models/user.model";
 import { session } from "../test/setup";
 import AccountModel from "../models/account.mode";
 import { userPayload } from "../test/test-helpers";
+import logger from "../configs/logger";
 
 it("should throw an error that account already exists", async () => {
   const { payload } = userPayload();
@@ -21,10 +22,19 @@ it("should save user and account to the database, call generateAccountNumber, th
   const { payload } = userPayload();
 
   jest.spyOn(helpersModule, "generateAccountNumber");
-  UserModel.prototype.save = jest.fn().mockResolvedValue(payload);
+  UserModel.prototype.save = jest.fn().mockResolvedValue({
+    firstName: "John",
+    lastName: "laurem",
+    phoneNo: "+2349056778912",
+    email: "laurem@email.com",
+    address: "12, Aln str. GRA",
+    dateOfBirth: "12-02-2009",
+  });
   AccountModel.prototype.save = jest.fn();
 
   const res = await request(app).post("/v1/auth/signup").send(payload);
+
+  // logger.info("new user", res.body);
 
   UserModel.prototype.save();
   expect(res.status).toBe(201);

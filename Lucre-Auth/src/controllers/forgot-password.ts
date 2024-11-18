@@ -5,6 +5,7 @@ import { BadRequestError } from "../utils/error";
 import { responseHandler } from "../utils/response";
 import { generateOtp } from "../utils/helpers";
 import logger from "../configs/logger";
+import { setEx } from "../configs/persistent/redis/redis-config";
 
 function sendOtp(req: Request, res: Response, next: NextFunction) {
   const { email } = req.body;
@@ -14,10 +15,10 @@ function sendOtp(req: Request, res: Response, next: NextFunction) {
     if (!user) throw new BadRequestError("an OTP was sent to your mail");
 
     const otp = generateOtp();
-    //save to otp db <use redis>
-    
+    // await setEx(`${user.id}:forgot-password`, otp);
+    logger.info("code", generateOtp());
     //publish forgot password event
-    logger.info("otp", otp);
+    logger.info("otp", user._id, otp, `${user.id}:forgot-password`, otp);
 
     return responseHandler({ res, message: "an OTP was sent to your mail" });
   }, next);

@@ -9,7 +9,8 @@ import logger from "./configs/logger";
   let server: any;
   try {
     await connectDB();
-    await connectRedis();
+    await connectRedis.connect();
+
     server = app.listen(appConfigs.port, () => {
       logger.info(`Server is running on port ${appConfigs.port}`);
     });

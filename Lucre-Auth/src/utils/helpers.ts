@@ -7,6 +7,8 @@ import { IToken } from "./types";
 const { accessTokenSecret, accessTokenLifeSpan } = appConfigs;
 
 export function generateOtp() {
+  console.log("oneee:", randomBytes(3).toString("hex"));
+
   return randomBytes(3).toString("hex");
 }
 

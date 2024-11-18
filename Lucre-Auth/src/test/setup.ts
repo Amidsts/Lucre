@@ -1,5 +1,6 @@
 import mongoose, { connect, disconnect, ClientSession } from "mongoose";
 import logger from "../configs/logger";
+import connectRedis from "../configs/persistent/redis";
 
 export const session = {
   startTransaction: jest.fn(),
@@ -14,6 +15,8 @@ beforeAll(async () => {
 
   await connect(process.env.MONGO_URI);
   logger.info("connected test db");
+
+  await connectRedis.connect();
 });
 
 beforeEach(() => {
