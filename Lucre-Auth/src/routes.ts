@@ -29,6 +29,7 @@ router.use(validateToken);
 router.patch(
   "/change-password",
   validateInput(changePasswordInputData),
+  validateToken,
   changePassword
 );
 router.patch("/edit-profile", validateInput(editProfileInputData), editProfile);

@@ -2,10 +2,14 @@ import { createClient, RedisClientType } from "redis";
 import logger from "../../logger";
 
 class Redis {
-  private _client: RedisClientType;
+  private _client: RedisClientType = createClient();
 
-  constructor() {
-    this._client = createClient();
+  get Client() {
+    if (this._client.isOpen) {
+      throw new Error("Not connected to Redis Server");
+    }
+
+    return this._client;
   }
 
   async connect() {
@@ -16,16 +20,8 @@ class Redis {
       if (error.code === "ECONNREFUSED")
         throw Error("Error connecting to Redis client");
 
-      throw Error(error.message);
+      throw Error(error.message || error);
     }
-  }
-
-  get Client() {
-    if (!this._client) {
-      throw Error("Not connected to redis client");
-    }
-
-    return this._client;
   }
 }
 

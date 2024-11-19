@@ -2,6 +2,19 @@ import mongoose, { connect, disconnect, ClientSession } from "mongoose";
 import logger from "../configs/logger";
 import connectRedis from "../configs/persistent/redis/redis";
 
+jest.mock("redis", () => {
+  const mockRedisClient = {
+    isOpen: false,
+    connect: jest.fn().mockResolvedValue(undefined),
+    get: jest.fn(),
+    setEx: jest.fn(),
+    disconnect: jest.fn(),
+  };
+
+  return {
+    createClient: jest.fn().mockReturnValue(mockRedisClient),
+  };
+});
 export const session = {
   startTransaction: jest.fn(),
   commitTransaction: jest.fn(),

@@ -13,7 +13,8 @@ const validateToken = async (
   let token = req.headers.authorization as string;
   token = token?.replace("Bearer ", "");
 
-  if (!token) return next();
+  if (!token) return next(Error("Please provide an access token"));
+  
   try {
     const decoded: IToken = jwt.verify(
       token,
