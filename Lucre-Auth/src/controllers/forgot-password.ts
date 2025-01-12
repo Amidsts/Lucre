@@ -17,8 +17,6 @@ function sendOtp(req: Request, res: Response, next: NextFunction) {
     const otp = generateOtp();
     await setEx(`forgot-password:${otp}`, otp);
 
-    logger.info(`OTP---->   ${user.id}:forgot-password = ${otp}`);
-
     //publish forgot password event
 
     return responseHandler({

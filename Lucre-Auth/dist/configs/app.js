@@ -27,7 +27,6 @@ const initializeMiddleware = () => {
     });
 };
 const initializeRoute = () => {
-    // app.use("/v1/auth")
     app.get("/", (req, res) => {
         (0, response_1.responseHandler)({ res, message: "Welcome to Lucre, Lets get started!" });
     });

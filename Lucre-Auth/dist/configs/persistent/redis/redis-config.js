@@ -12,25 +12,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = __importDefault(require("mongoose"));
-const _1 = __importDefault(require("."));
-function connectDB() {
+exports.setEx = setEx;
+exports.GET = GET;
+const redis_1 = __importDefault(require("./redis"));
+const { Client } = redis_1.default;
+function setEx(key, value) {
     return __awaiter(this, void 0, void 0, function* () {
-        const options = {
-            family: 4,
-        };
-        try {
-            yield mongoose_1.default.connect(_1.default.mongoDbUri, options);
-            console.log("Database connected");
-        }
-        catch (error) {
-            console.log("Error connecting to database:", error);
-            process.exit(1);
-        }
-        // Listen for errors after the initial connection
-        mongoose_1.default.connection.on("error", (error) => {
-            console.log("Database error:" + error, "error");
-        });
+        return yield Client.setEx(key, 30, value);
     });
 }
-exports.default = connectDB;
+function GET(key) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return yield Client.get(key);
+    });
+}

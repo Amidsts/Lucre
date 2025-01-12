@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = require("mongoose");
 const bcrypt_1 = __importDefault(require("bcrypt"));
-const authSchema = new mongoose_1.Schema({
+const userSchema = new mongoose_1.Schema({
     firstName: String,
     lastName: String,
     fullName: String,
@@ -23,10 +23,20 @@ const authSchema = new mongoose_1.Schema({
     password: String,
     address: String,
     dateOfBirth: String,
+    kycVerified: Boolean,
 }, {
     timestamps: true,
     toJSON: {
-        transform: function (_doc, ret) {
+        transform(_doc, ret) {
+            ret.id = ret._id;
+            ret.version = ret.__v;
+            delete ret._id;
+            delete ret.__v;
+            delete ret.password;
+        },
+    },
+    toObject: {
+        transform(_doc, ret) {
             ret.id = ret._id;
             ret.version = ret.__v;
             delete ret._id;
@@ -35,7 +45,7 @@ const authSchema = new mongoose_1.Schema({
         },
     },
 });
-authSchema.pre("save", function (next) {
+userSchema.pre("save", function (next) {
     return __awaiter(this, void 0, void 0, function* () {
         if (this.isModified("password")) {
             const salt = yield bcrypt_1.default.genSalt(10);
@@ -44,10 +54,8 @@ authSchema.pre("save", function (next) {
         next();
     });
 });
-authSchema.methods.comparePassword = function (Password) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return yield bcrypt_1.default.compare(Password, this.password);
-    });
+userSchema.methods.comparePassword = function (Password) {
+    return bcrypt_1.default.compareSync(Password, this.password);
 };
-const AuthModel = (0, mongoose_1.model)("Auth", authSchema);
-exports.default = AuthModel;
+const UserModel = (0, mongoose_1.model)("User", userSchema);
+exports.default = UserModel;

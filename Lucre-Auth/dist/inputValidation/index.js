@@ -26,6 +26,6 @@ const validateInput = (schema, fieldType = "body") => (req, res, next) => {
             req.query = parsedData;
         }
         next();
-    }), res, next);
+    }), next);
 };
 exports.default = validateInput;

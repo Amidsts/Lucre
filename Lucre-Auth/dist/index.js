@@ -15,23 +15,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const configs_1 = __importDefault(require("./configs"));
 const app_1 = __importDefault(require("./configs/app"));
-const db_1 = __importDefault(require("./configs/db"));
+const db_1 = __importDefault(require("./configs/persistent/db"));
+const redis_1 = __importDefault(require("./configs/persistent/redis/redis"));
+const logger_1 = __importDefault(require("./configs/logger"));
 (() => __awaiter(void 0, void 0, void 0, function* () {
     let server;
     try {
         yield (0, db_1.default)();
+        yield redis_1.default.connect();
         server = app_1.default.listen(configs_1.default.port, () => {
-            console.log(`Server is running on port ${configs_1.default.port}`);
+            logger_1.default.info(`Server is running on port ${configs_1.default.port}`);
         });
         const gracefulShutdown = () => {
-            console.log("Received server kill signal, shutting down gracefully.");
+            logger_1.default.info("Received server kill signal, shutting down gracefully.");
             server.close(() => __awaiter(void 0, void 0, void 0, function* () {
                 try {
                     yield mongoose_1.default.disconnect();
-                    console.log("Closed database connections.");
+                    logger_1.default.info("Closed database connections.");
                 }
                 catch (err) {
-                    console.log("Error closing connections", err);
+                    logger_1.default.info("Error closing connections", err);
                 }
                 finally {
                     process.exit(0);
@@ -42,16 +45,16 @@ const db_1 = __importDefault(require("./configs/db"));
             .on("SIGINT", gracefulShutdown)
             .on("SIGTERM", gracefulShutdown)
             .on("unhandledRejection", (error) => {
-            console.log("unhandledRejection Signal: ", error);
+            logger_1.default.info("unhandledRejection Signal: ", error);
             gracefulShutdown();
         })
             .on("uncaughtException", (error) => {
-            console.log("uncaughtException Signal: ", error);
+            logger_1.default.info("uncaughtException Signal: ", error);
             gracefulShutdown();
         });
     }
     catch (error) {
-        console.log(error);
+        logger_1.default.error(error.message);
         process.exit(0);
     }
 }))();

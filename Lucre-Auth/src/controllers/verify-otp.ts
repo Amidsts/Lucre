@@ -15,7 +15,6 @@ function verifyOtp(req: Request, res: Response, next: NextFunction) {
     const otpExist = await GET(`forgot-password:${otp}`);
     if (!otpExist) throw new BadRequestError("invalid OTP");
 
-    //set verified otp
     await setEx(`verified:${otp}`, otp);
 
     return responseHandler({

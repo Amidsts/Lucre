@@ -8,25 +8,29 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.asyncWrapper = asyncWrapper;
-const zod_1 = require("zod");
-function asyncWrapper(callback, next, session) {
+const mongoose_1 = __importDefault(require("mongoose"));
+const __1 = __importDefault(require(".."));
+const logger_1 = __importDefault(require("../logger"));
+function connectDB() {
     return __awaiter(this, void 0, void 0, function* () {
+        const options = {
+            family: 4,
+        };
         try {
-            const result = yield callback();
-            return result;
+            yield mongoose_1.default.connect(__1.default.mongoDbUri, options);
+            logger_1.default.info("Connected to Database");
         }
-        catch (err) {
-            if (err instanceof zod_1.ZodError) {
-                next(Error(`${err.errors[0].path}: ${err.errors[0].message}`));
-                return;
-            }
-            if (session) {
-                yield session.abortTransaction();
-                yield session.endSession();
-            }
-            return next(err);
+        catch (error) {
+            throw Error(`Error connecting to database: ${error.message}`);
         }
+        // Listen for errors after the initial connection
+        mongoose_1.default.connection.on("error", (error) => {
+            throw Error(`Database error: ${error.message}`);
+        });
     });
 }
+exports.default = connectDB;

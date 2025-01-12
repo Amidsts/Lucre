@@ -10,7 +10,7 @@ import UserModel from "../models/user.model";
 const { payload } = userPayload();
 const objectId = new mongoose.Types.ObjectId();
 
-it(" should throw that no access token was provided", async () => {
+it("should throw that no access token was provided", async () => {
   const res = await request(app).patch("/v1/auth/change-password").send({
     currentPassword: payload.password,
     newPassword: "abcdef12$",

@@ -12,6 +12,10 @@ import editProfile from "./controllers/edit-profile";
 import retriveProfile from "./controllers/get-profile";
 import { signinInputData } from "./inputValidation/signin-validation";
 import { forgotPasswordInputData } from "./inputValidation/forgot-password-validation";
+import { resetPasswordSchema } from "./inputValidation/reset-password-validation";
+import resetPassword from "./controllers/reset-password";
+import verifyOtp from "./controllers/verify-otp";
+import { verifyOtpSchema } from "./inputValidation/verify-otp";
 
 const router = Router();
 
@@ -22,14 +26,23 @@ router.post(
   validateInput(forgotPasswordInputData),
   sendOtp
 );
-router.post("/resend-forgotpassword-otp", validateInput(forgotPasswordInputData), sendOtp);
+router.post(
+  "/resend-forgotpassword-otp",
+  validateInput(forgotPasswordInputData),
+  sendOtp
+);
+router.patch(
+  "/reset-password",
+  validateInput(resetPasswordSchema),
+  resetPassword
+);
+router.post("/verify-otp", validateInput(verifyOtpSchema), verifyOtp);
 
 router.use(validateToken);
 
 router.patch(
   "/change-password",
   validateInput(changePasswordInputData),
-  validateToken,
   changePassword
 );
 router.patch("/edit-profile", validateInput(editProfileInputData), editProfile);

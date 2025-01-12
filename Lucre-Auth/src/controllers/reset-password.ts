@@ -3,7 +3,7 @@ import { asyncWrapper } from "../utils/request-wrapper";
 import UserModel from "../models/user.model";
 import { BadRequestError, ResourceNotFoundError } from "../utils/error";
 import { responseHandler } from "../utils/response";
-import { GET, setEx } from "../configs/persistent/redis/redis-config";
+import { GET } from "../configs/persistent/redis/redis-config";
 
 function resetPassword(req: Request, res: Response, next: NextFunction) {
   const { email, otp, newPassword } = req.body;
