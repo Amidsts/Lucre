@@ -1,4 +1,4 @@
-@server= http://localhost:1000
+@server= http://localhost:3000
 
 #### forgot password
 POST {{server}}/v1/auth/forgot-password
@@ -7,3 +7,17 @@ Content-Type: application/json
 {
     "email": "email@email.com"
 }
+
+
+### Wallet
+POST {{server}}/wallets/create
+Content-Type: application/json
+
+{
+    "User": "abcdefgh",
+    "acct_no": "123458960234",
+    "currency": "NGN"
+}
+
+####
+GET {{server}}

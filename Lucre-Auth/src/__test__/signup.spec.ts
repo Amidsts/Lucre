@@ -4,7 +4,7 @@ import * as helpersModule from "../utils/helpers";
 import app from "../configs/app";
 import UserModel from "../models/user.model";
 import { session } from "../test/setup";
-import AccountModel from "../models/account.mode";
+import AccountModel from "../models/account.model";
 import { userPayload } from "../test/test-helpers";
 import logger from "../configs/logger";
 

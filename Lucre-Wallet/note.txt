@@ -1,0 +1,7 @@
+Tool: NestJs
+
+feature***
+
+Create a wallet.
+fetch wallet details
+Check wallet balance.

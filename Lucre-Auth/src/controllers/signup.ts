@@ -3,7 +3,7 @@ import { asyncWrapper } from "../utils/request-wrapper";
 import UserModel from "../models/user.model";
 import { ConflictError } from "../utils/error";
 import { generateAccountNumber } from "../utils/helpers";
-import AccountModel from "../models/account.mode";
+import AccountModel from "../models/account.model";
 import { startSession } from "mongoose";
 import { responseHandler } from "../utils/response";
 
