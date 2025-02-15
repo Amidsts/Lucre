@@ -1,4 +1,8 @@
-Tool: NestJs
+Tool: 
+- NestJs
+- PostgreSQL
+- TypeORM
+
 
 feature***
 

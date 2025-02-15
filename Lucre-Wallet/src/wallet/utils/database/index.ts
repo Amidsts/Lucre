@@ -1,5 +1,5 @@
 import {TypeOrmModuleOptions} from "@nestjs/typeorm"
-import { Wallet } from "src/wallet/wallet.entity";
+import { Wallet } from "src/wallet/models/wallets.entity";
 
 export const dbConfig: TypeOrmModuleOptions = {
   type: 'postgres',
