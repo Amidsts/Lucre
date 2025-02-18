@@ -15,24 +15,29 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.WalletService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
-const wallet_entity_1 = require("./wallet.entity");
+const wallets_entity_1 = require("./models/wallets.entity");
 const typeorm_2 = require("typeorm");
 let WalletService = class WalletService {
     constructor(walletRepository) {
         this.walletRepository = walletRepository;
     }
     async createWallet(wallet) {
-        const newWallet = new wallet_entity_1.Wallet();
-        newWallet.User = wallet.User;
-        newWallet.acct_no = wallet.acct_no;
-        newWallet.currency = wallet.currency;
-        return await this.walletRepository.save(newWallet);
+        const { userId } = wallet;
+        const hasWalletForCurrency = await wallets_entity_1.default.getWalletByParams({
+            userId,
+            currency: wallet.currency,
+        });
+        if (hasWalletForCurrency) {
+            console.log('This user has a wallet for this currency');
+            return hasWalletForCurrency;
+        }
+        return await wallets_entity_1.default.createWallet(wallet);
     }
 };
-exports.WalletService = WalletService;
-exports.WalletService = WalletService = __decorate([
+WalletService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_1.InjectRepository)(wallet_entity_1.Wallet)),
+    __param(0, (0, typeorm_1.InjectRepository)(wallets_entity_1.default)),
     __metadata("design:paramtypes", [typeorm_2.Repository])
 ], WalletService);
+exports.WalletService = WalletService;
 //# sourceMappingURL=wallet.service.js.map

@@ -9,17 +9,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.WalletModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
-const wallet_entity_1 = require("./wallet.entity");
+const wallets_entity_1 = require("./models/wallets.entity");
 const wallet_service_1 = require("./wallet.service");
 const wallet_controller_1 = require("./wallet.controller");
 let WalletModule = class WalletModule {
 };
-exports.WalletModule = WalletModule;
-exports.WalletModule = WalletModule = __decorate([
+WalletModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([wallet_entity_1.Wallet])],
+        imports: [typeorm_1.TypeOrmModule.forFeature([wallets_entity_1.default])],
         providers: [wallet_service_1.WalletService],
         controllers: [wallet_controller_1.WalletController],
     })
 ], WalletModule);
+exports.WalletModule = WalletModule;
 //# sourceMappingURL=wallet.module.js.map

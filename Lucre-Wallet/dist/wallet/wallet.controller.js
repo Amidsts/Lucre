@@ -23,7 +23,6 @@ let WalletController = class WalletController {
         return await this.walletService.createWallet(walletDto);
     }
 };
-exports.WalletController = WalletController;
 __decorate([
     (0, common_1.Post)('create'),
     __param(0, (0, common_1.Body)()),
@@ -31,8 +30,9 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], WalletController.prototype, "creatWallet", null);
-exports.WalletController = WalletController = __decorate([
+WalletController = __decorate([
     (0, common_1.Controller)('wallets'),
     __metadata("design:paramtypes", [wallet_service_1.WalletService])
 ], WalletController);
+exports.WalletController = WalletController;
 //# sourceMappingURL=wallet.controller.js.map

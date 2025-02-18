@@ -1,17 +1,23 @@
-import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, FindOptionsWhere } from 'typeorm';
 import {
-  IWallet,
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  BaseEntity,
+  FindOptionsWhere,
+} from 'typeorm';
+import {
   WalletCurrencyEnum,
   walletStatusEnum,
-} from '../utils/interfaces/wallet.interface';
+} from '../utils/types/wallet.interface';
+import { generateAccountNumber } from 'src/controllers/helpers';
 
 @Entity('wallet')
-export default class WalletEntity extends BaseEntity{
+export default class WalletEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  User: string;
+  userId: string;
 
   @Column({ unique: true })
   acct_no: string;
@@ -33,13 +39,20 @@ export default class WalletEntity extends BaseEntity{
   })
   status: walletStatusEnum;
 
-  static async createWallet(params: Partial<WalletEntity>): Promise<WalletEntity> {
-    return await this.getRepository().save(params)
+  static async createWallet(
+    params: Partial<WalletEntity>,
+  ): Promise<WalletEntity> {
+    return await this.getRepository().save({
+      ...params,
+      acct_no: generateAccountNumber(),
+    });
   }
 
-  static async getWalletByParams(params: FindOptionsWhere<WalletEntity>): Promise<WalletEntity> {
+  static async getWalletByParams(
+    params: FindOptionsWhere<WalletEntity>,
+  ): Promise<WalletEntity> {
     return await this.getRepository().findOne({
-      where: params
-    })
+      where: params,
+    });
   }
 }

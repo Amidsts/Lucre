@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import WalletEntity from './models/wallets.entity';
 import { Repository } from 'typeorm';
-import { IWallet } from './utils/interfaces/wallet.interface';
 
 @Injectable()
 export class WalletService {
@@ -12,14 +11,13 @@ export class WalletService {
   ) {}
 
   async createWallet(wallet: Partial<WalletEntity>): Promise<WalletEntity> {
-    //check if user doesn't have a wallet with the given currency
-
+    const { userId } = wallet;
     const hasWalletForCurrency = await WalletEntity.getWalletByParams({
+      userId,
       currency: wallet.currency,
     });
     if (hasWalletForCurrency) {
-      //throw an error
-      console.log('error'); //TODO: handle custom error
+      console.log('This user has a wallet for this currency'); //TODO: handle custom error
       return hasWalletForCurrency;
     }
 

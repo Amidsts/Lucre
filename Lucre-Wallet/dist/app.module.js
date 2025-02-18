@@ -15,12 +15,12 @@ const database_1 = require("./wallet/utils/database");
 const wallet_module_1 = require("./wallet/wallet.module");
 let AppModule = class AppModule {
 };
-exports.AppModule = AppModule;
-exports.AppModule = AppModule = __decorate([
+AppModule = __decorate([
     (0, common_1.Module)({
         imports: [typeorm_1.TypeOrmModule.forRoot(database_1.dbConfig), wallet_module_1.WalletModule],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
     })
 ], AppModule);
+exports.AppModule = AppModule;
 //# sourceMappingURL=app.module.js.map

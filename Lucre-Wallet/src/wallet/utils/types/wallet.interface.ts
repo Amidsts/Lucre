@@ -1,8 +1,8 @@
-export interface IWallet {
-  User: string;
-  acct_no: string;
-  currency: WalletCurrencyEnum
-}
+// export interface IWallet {
+//   User: string;
+//   acct_no: string;
+//   currency: WalletCurrencyEnum
+// }
 
 export enum walletStatusEnum {
   pending = 'pending',

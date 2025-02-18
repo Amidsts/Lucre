@@ -9,28 +9,38 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Wallet = void 0;
 const typeorm_1 = require("typeorm");
-const wallet_interface_1 = require("./utils/interfaces/wallet.interface");
-let Wallet = class Wallet {
+const wallet_interface_1 = require("../utils/types/wallet.interface");
+const helpers_1 = require("../../controllers/helpers");
+let WalletEntity = class WalletEntity extends typeorm_1.BaseEntity {
+    static async createWallet(params) {
+        return await this.getRepository().save({
+            ...params,
+            acct_no: (0, helpers_1.generateAccountNumber)(),
+        });
+    }
+    static async getWalletByParams(params) {
+        return await this.getRepository().findOne({
+            where: params,
+        });
+    }
 };
-exports.Wallet = Wallet;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], Wallet.prototype, "id", void 0);
+], WalletEntity.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], Wallet.prototype, "User", void 0);
+], WalletEntity.prototype, "userId", void 0);
 __decorate([
     (0, typeorm_1.Column)({ unique: true }),
     __metadata("design:type", String)
-], Wallet.prototype, "acct_no", void 0);
+], WalletEntity.prototype, "acct_no", void 0);
 __decorate([
     (0, typeorm_1.Column)({ default: 0 }),
     __metadata("design:type", Number)
-], Wallet.prototype, "balance", void 0);
+], WalletEntity.prototype, "balance", void 0);
 __decorate([
     (0, typeorm_1.Column)({
         type: 'enum',
@@ -38,7 +48,7 @@ __decorate([
         default: wallet_interface_1.WalletCurrencyEnum.NGN,
     }),
     __metadata("design:type", String)
-], Wallet.prototype, "currency", void 0);
+], WalletEntity.prototype, "currency", void 0);
 __decorate([
     (0, typeorm_1.Column)({
         type: 'enum',
@@ -46,8 +56,9 @@ __decorate([
         default: wallet_interface_1.walletStatusEnum.inactive,
     }),
     __metadata("design:type", String)
-], Wallet.prototype, "status", void 0);
-exports.Wallet = Wallet = __decorate([
-    (0, typeorm_1.Entity)()
-], Wallet);
-//# sourceMappingURL=wallet.entity.js.map
+], WalletEntity.prototype, "status", void 0);
+WalletEntity = __decorate([
+    (0, typeorm_1.Entity)('wallet')
+], WalletEntity);
+exports.default = WalletEntity;
+//# sourceMappingURL=wallets.entity.js.map

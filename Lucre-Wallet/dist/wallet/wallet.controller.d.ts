@@ -1,8 +1,7 @@
-import { Wallet } from './wallet.entity';
+import Wallet from './models/wallets.entity';
 import { WalletService } from './wallet.service';
-import { IWallet } from './utils/interfaces/wallet.interface';
 export declare class WalletController {
     private walletService;
     constructor(walletService: WalletService);
-    creatWallet(walletDto: IWallet): Promise<Wallet>;
+    creatWallet(walletDto: Partial<Wallet>): Promise<Wallet>;
 }
