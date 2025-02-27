@@ -1,6 +1,7 @@
 import mongoose, { connect, disconnect, ClientSession } from "mongoose";
 import logger from "../configs/logger";
 import connectRedis from "../configs/persistent/redis/redis";
+import appConfigs from "../configs";
 
 jest.mock("redis", () => {
   const mockRedisClient = {
@@ -26,7 +27,7 @@ export const session = {
 beforeAll(async () => {
   logger.info("Testing.........");
 
-  await connect(process.env.MONGO_URI);
+  await connect(appConfigs.mongoDbUri);
   logger.info("connected test db");
 
   await connectRedis.connect();

@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"","sources":["../../../../src/wallet/configs/database/index.ts"],"names":[],"mappings":";;;AACA,gEAAuD;AAE1C,QAAA,QAAQ,GAAyB;IAC5C,IAAI,EAAE,UAAU;IAChB,IAAI,EAAE,WAAW;IACjB,IAAI,EAAE,IAAI;IACV,QAAQ,EAAE,UAAU;IACpB,QAAQ,EAAE,EAAE;IACZ,QAAQ,EAAE,cAAc;IACxB,QAAQ,EAAE,CAAC,wBAAY,CAAC;IACxB,WAAW,EAAE,IAAI;CAClB,CAAC"}

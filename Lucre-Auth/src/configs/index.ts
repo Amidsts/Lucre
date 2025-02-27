@@ -6,7 +6,7 @@ const appConfigs = {
   mongoDbUri: env.DB_URI || "",
   port: env.PORT || 7000,
   accessTokenSecret: env.ACCESS_TOKEN_SECRET || "",
-  accessTokenLifeSpan: "1 days",
+  accessTokenLifeSpan: 60*60*24,
   hashPepper: env.HASH_PEPPER,
 };
 

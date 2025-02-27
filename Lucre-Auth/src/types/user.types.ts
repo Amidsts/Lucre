@@ -10,5 +10,5 @@ export interface IUser extends Document {
   address: string;
   dateOfBirth: string;
   kycVerified: boolean;
-  comparePassword?: (password: string) => Promise<boolean>;
+  comparePassword: (password: string) => boolean
 }

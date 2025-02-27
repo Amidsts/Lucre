@@ -12,7 +12,7 @@ function signIn(req: Request, res: Response, next: NextFunction) {
     let user = await UserModel.findOne({ email });
     if (!user) throw new BadRequestError("Invalid credentials");
 
-    if (!(await user.comparePassword(password)))
+    if (!(user.comparePassword(password)))
       throw new BadRequestError("Invalid credentials");
 
     const token = generateToken({ id: user.id });

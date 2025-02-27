@@ -6,10 +6,10 @@ import {
   FindOptionsWhere,
 } from 'typeorm';
 import {
-  WalletCurrencyEnum,
-  walletStatusEnum,
-} from '../utils/types/wallet.interface';
-import { generateAccountNumber } from 'src/controllers/helpers';
+  WalletCurrency,
+  walletStatus,
+} from '../../utils/types/wallet.interface';
+import { generateAccountNumber } from 'src/utils/helpers';
 
 @Entity('wallet')
 export default class WalletEntity extends BaseEntity {
@@ -27,17 +27,17 @@ export default class WalletEntity extends BaseEntity {
 
   @Column({
     type: 'enum',
-    enum: WalletCurrencyEnum,
-    default: WalletCurrencyEnum.NGN,
+    enum: WalletCurrency,
+    default: WalletCurrency.NGN,
   })
-  currency: WalletCurrencyEnum;
+  currency: WalletCurrency;
 
   @Column({
     type: 'enum',
-    enum: walletStatusEnum,
-    default: walletStatusEnum.inactive,
+    enum: walletStatus,
+    default: walletStatus.inactive,
   })
-  status: walletStatusEnum;
+  status: walletStatus;
 
   static async createWallet(
     params: Partial<WalletEntity>,
@@ -52,6 +52,14 @@ export default class WalletEntity extends BaseEntity {
     params: FindOptionsWhere<WalletEntity>,
   ): Promise<WalletEntity> {
     return await this.getRepository().findOne({
+      where: params,
+    });
+  }
+
+  static async getWalletsByParams(
+    params: FindOptionsWhere<WalletEntity>,
+  ): Promise<WalletEntity[]> {
+    return await this.getRepository().find({
       where: params,
     });
   }

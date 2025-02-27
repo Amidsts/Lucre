@@ -8,6 +8,7 @@ function changePassword(req: IRequest, res: Response, next: NextFunction) {
   const { newPassword, currentPassword } = req.body;
   const { user } = req;
   return asyncWrapper(async () => {
+    const isPasswordSame = user.comparePassword("")
     if (!user.comparePassword(currentPassword))
       throw new BadRequestError("Incorrect password");
 

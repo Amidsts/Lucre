@@ -3,5 +3,18 @@
 ###
 GET {{api}}
 
+### ================  AUTH  ==================
+ 
+### ====================  WALLET  ===============
+
 ### Create new Wallet
 POST {{api}}/wallets/create
+Content-Type: application/json
+
+{
+    "userId": "1",
+    "currency": "NGNj"
+}
+
+###Get Wallets
+GET {{api}}/wallets?currency=USD&userId=1

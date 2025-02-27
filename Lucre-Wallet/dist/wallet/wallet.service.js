@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const wallets_entity_1 = require("./models/wallets.entity");
 const typeorm_2 = require("typeorm");
+const logger_1 = require("../utils/logger");
 let WalletService = class WalletService {
     constructor(walletRepository) {
         this.walletRepository = walletRepository;
@@ -28,10 +29,13 @@ let WalletService = class WalletService {
             currency: wallet.currency,
         });
         if (hasWalletForCurrency) {
-            console.log('This user has a wallet for this currency');
+            logger_1.default.error('This user has a wallet for this currency', { userId });
             return hasWalletForCurrency;
         }
         return await wallets_entity_1.default.createWallet(wallet);
+    }
+    async getWallets({ currency, userId, }) {
+        return await wallets_entity_1.default.getWalletsByParams({ currency, userId });
     }
 };
 WalletService = __decorate([

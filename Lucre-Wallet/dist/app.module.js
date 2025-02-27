@@ -11,7 +11,7 @@ const common_1 = require("@nestjs/common");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const typeorm_1 = require("@nestjs/typeorm");
-const database_1 = require("./wallet/utils/database");
+const database_1 = require("./wallet/configs/database");
 const wallet_module_1 = require("./wallet/wallet.module");
 let AppModule = class AppModule {
 };

@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import WalletEntity from './models/wallets.entity';
 import { Repository } from 'typeorm';
+import { getWalletByParams } from '../utils/types/wallet.interface';
+import logger from 'src/utils/logger';
 
 @Injectable()
 export class WalletService {
@@ -17,11 +19,17 @@ export class WalletService {
       currency: wallet.currency,
     });
     if (hasWalletForCurrency) {
-      console.log('This user has a wallet for this currency'); //TODO: handle custom error
+      logger.error('This user has a wallet for this currency', { userId });
       return hasWalletForCurrency;
     }
 
-    //create wallet
     return await WalletEntity.createWallet(wallet);
+  }
+
+  async getWallets({
+    currency,
+    userId,
+  }: getWalletByParams): Promise<WalletEntity[]> {
+    return await WalletEntity.getWalletsByParams({ currency, userId });
   }
 }

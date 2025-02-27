@@ -15,21 +15,34 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.WalletController = void 0;
 const common_1 = require("@nestjs/common");
 const wallet_service_1 = require("./wallet.service");
+const wallets_validators_1 = require("../utils/inputValidatorPipes/wallets-validators");
 let WalletController = class WalletController {
     constructor(walletService) {
         this.walletService = walletService;
     }
-    async creatWallet(walletDto) {
-        return await this.walletService.createWallet(walletDto);
+    async creatWallet(createWalletDto) {
+        return await this.walletService.createWallet(createWalletDto);
+    }
+    async getWallets(params) {
+        const { currency, userId } = params;
+        return await this.walletService.getWallets({ currency, userId });
     }
 };
 __decorate([
     (0, common_1.Post)('create'),
+    (0, common_1.UsePipes)(new wallets_validators_1.ValidateInputPipe(wallets_validators_1.createWalletSchema)),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], WalletController.prototype, "creatWallet", null);
+__decorate([
+    (0, common_1.Get)(),
+    __param(0, (0, common_1.Query)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], WalletController.prototype, "getWallets", null);
 WalletController = __decorate([
     (0, common_1.Controller)('wallets'),
     __metadata("design:paramtypes", [wallet_service_1.WalletService])

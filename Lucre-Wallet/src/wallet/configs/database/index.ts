@@ -1,5 +1,5 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import Wallet from 'src/wallet/models/wallets.entity';
+import WalletEntity from '../../models/wallets.entity';
 
 export const dbConfig: TypeOrmModuleOptions = {
   type: 'postgres',
@@ -8,6 +8,6 @@ export const dbConfig: TypeOrmModuleOptions = {
   username: 'postgres',
   password: '',
   database: 'lucre_wallet',
-  entities: [Wallet],
-  synchronize: false,
+  entities: [WalletEntity],
+  synchronize: true,
 };
