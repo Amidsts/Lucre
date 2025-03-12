@@ -1,7 +1,7 @@
+import { ConflictError } from "lucre-common";
 import { NextFunction, Request, Response } from "express";
 import { asyncWrapper } from "../utils/request-wrapper";
 import UserModel from "../models/user.model";
-import { ConflictError } from "../utils/error";
 import { responseHandler } from "../utils/response";
 
 async function signUp(req: Request, res: Response, next: NextFunction) {
@@ -38,7 +38,7 @@ async function signUp(req: Request, res: Response, next: NextFunction) {
        * 3) Proof of Address ( using Documents like: utility bills or bank statements.
        */
 
-      //publish userId to create a wallet
+      //create a user model in Wallet service
 
       //publish an onboarding event (this ensure the notification service is aware and send welcome email notification to the user)
       return responseHandler({

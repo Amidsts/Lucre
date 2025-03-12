@@ -12,11 +12,14 @@ services:
     depends_on:
       - database
       - redis-cache
+    restart: always
+    volumes:
+      - .:/usr/src/index
 
   database:
     image: mongo:8.0-noble
     ports:
-      - "27017:27017"
+      - "27018:27017"
     volumes:
       - db-data:/data/db
 

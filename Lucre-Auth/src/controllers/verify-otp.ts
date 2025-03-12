@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { asyncWrapper } from "../utils/request-wrapper";
 import UserModel from "../models/user.model";
-import { BadRequestError, ResourceNotFoundError } from "../utils/error";
+import { BadRequestError, ResourceNotFoundError } from "lucre-common"
 import { responseHandler } from "../utils/response";
 import { GET, setEx } from "../configs/persistent/redis/redis-config";
 

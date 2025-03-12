@@ -4,3 +4,6 @@ Tools
 - Redis
 - Node/Express
 - Zod
+
+///commads
+// docker compose up --build

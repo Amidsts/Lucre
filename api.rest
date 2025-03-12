@@ -1,10 +1,24 @@
-@api=http://localhost:3000
+@api=http://localhost:2000
 
 ###
 GET {{api}}
 
 ### ================  AUTH  ==================
- 
+####create new User
+ POST {{api}}/v1/auth/signup
+ Content-Type: application/json
+
+ {
+    "firstName": "John",
+    "lastName": "Doe",
+    "phoneNo": "091389944002",
+    "email": "doe@email.com",
+    "password": "Password2@",
+    "confirmPassword": "Password2@",
+    "address": "12, banks way, irks city",
+    "dateOfBirth": "12-04-1870"
+ }
+
 ### ====================  WALLET  ===============
 
 ### Create new Wallet

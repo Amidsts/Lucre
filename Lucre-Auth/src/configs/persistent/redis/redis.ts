@@ -2,7 +2,7 @@ import { createClient, RedisClientType } from "redis";
 import logger from "../../logger";
 
 class Redis {
-  private _client: RedisClientType = createClient();
+  private _client: RedisClientType = createClient({url: 'redis://redis-cache:6379'});
 
   get Client() {
     if (this._client.isOpen) {

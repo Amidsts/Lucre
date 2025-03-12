@@ -2,14 +2,14 @@ import mongoose from "mongoose";
 import appConfigs from "./configs";
 import app from "./configs/app";
 import connectDB from "./configs/persistent/db";
-import connectRedis from "./configs/persistent/redis/redis";
 import logger from "./configs/logger";
+import connectRedis from "./configs/persistent/redis/redis";
 
 (async () => {
   let server: any;
   try {
     await connectDB();
-    await connectRedis.connect();
+    // await connectRedis.connect();
 
     server = app.listen(appConfigs.port, () => {
       logger.info(`Server is running on port ${appConfigs.port}`);

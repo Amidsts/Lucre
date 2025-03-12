@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { asyncWrapper } from "../utils/request-wrapper";
 import UserModel from "../models/user.model";
-import { BadRequestError } from "../utils/error";
+import { BadRequestError } from "lucre-common"
 import { generateToken } from "../utils/helpers";
 import { responseHandler } from "../utils/response";
 

@@ -2,7 +2,7 @@ import { NextFunction, Response } from "express";
 import { IToken, IRequest } from "../utils/types";
 import jwt from "jsonwebtoken";
 import appConfig from "../configs";
-import { AuthenticationError, AuthorizationError } from "../utils/error";
+import { AuthenticationError, AuthorizationError } from "lucre-common"
 import UserModel from "../models/user.model";
 
 const validateToken = async (
