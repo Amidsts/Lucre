@@ -2,7 +2,7 @@ import { NextFunction, Response } from "express";
 import { IToken, IRequest } from "../utils/types";
 import jwt from "jsonwebtoken";
 import appConfig from "../configs";
-import { AuthenticationError, AuthorizationError } from "lucre-common"
+import { errors} from "lucre-common"
 import UserModel from "../models/user.model";
 
 const validateToken = async (
@@ -20,11 +20,11 @@ const validateToken = async (
       token,
       appConfig.accessTokenSecret
     ) as IToken;
-    if (!decoded) throw new AuthenticationError("authentication is required");
+    if (!decoded) throw new errors.AuthenticationError("authentication is required");
 
     const { id } = decoded;
     const user = await UserModel.findById(id);
-    if (!user) throw new AuthorizationError("authorization failed");
+    if (!user) throw new errors.AuthorizationError("authorization failed");
 
     req.user = user;
     next();

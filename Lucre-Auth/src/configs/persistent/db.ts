@@ -1,6 +1,6 @@
 import mongoose, { ConnectOptions } from "mongoose";
 import appConfigs from "..";
-import logger from "../logger";
+import {logger} from "lucre-common"
 
 async function connectDB(): Promise<void> {
   const options = {

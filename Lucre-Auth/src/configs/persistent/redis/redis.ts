@@ -1,5 +1,5 @@
 import { createClient, RedisClientType } from "redis";
-import logger from "../../logger";
+import {logger} from "lucre-common";
 
 class Redis {
   private _client: RedisClientType = createClient({url: 'redis://redis-cache:6379'});

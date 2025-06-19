@@ -1,8 +1,9 @@
-import { ConflictError } from "lucre-common";
+import { errors } from "lucre-common";
 import { NextFunction, Request, Response } from "express";
 import { asyncWrapper } from "../utils/request-wrapper";
 import UserModel from "../models/user.model";
 import { responseHandler } from "../utils/response";
+import { z } from "zod";
 
 async function signUp(req: Request, res: Response, next: NextFunction) {
   const {
@@ -15,11 +16,11 @@ async function signUp(req: Request, res: Response, next: NextFunction) {
     dateOfBirth,
   } = req.body;
 
-
+  
   return asyncWrapper(
     async () => {
       let user = await UserModel.findOne({ email });
-      if (user) throw new ConflictError("Account already exists");
+      if (user) throw new errors.ConflictError("Account already exists");
 
       user = await new UserModel({
         firstName,
@@ -41,6 +42,7 @@ async function signUp(req: Request, res: Response, next: NextFunction) {
       //create a user model in Wallet service
 
       //publish an onboarding event (this ensure the notification service is aware and send welcome email notification to the user)
+
       return responseHandler({
         res,
         data: user,

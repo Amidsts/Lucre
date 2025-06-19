@@ -2,14 +2,15 @@ import mongoose from "mongoose";
 import appConfigs from "./configs";
 import app from "./configs/app";
 import connectDB from "./configs/persistent/db";
-import logger from "./configs/logger";
-import connectRedis from "./configs/persistent/redis/redis";
+import { logger } from "lucre-common";
+import {rmq} from "./rmqManager/connection";
 
 (async () => {
   let server: any;
   try {
     await connectDB();
     // await connectRedis.connect();
+    rmq.then(() => console.log('connected to rabbit mq from Lucre-Auth')) //connect to queue manager
 
     server = app.listen(appConfigs.port, () => {
       logger.info(`Server is running on port ${appConfigs.port}`);

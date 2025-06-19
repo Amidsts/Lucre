@@ -1,5 +1,5 @@
 import mongoose, { connect, disconnect, ClientSession } from "mongoose";
-import logger from "../configs/logger";
+import {logger} from "lucre-common";
 import connectRedis from "../configs/persistent/redis/redis";
 import appConfigs from "../configs";
 

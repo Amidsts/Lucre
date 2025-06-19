@@ -1,6 +1,6 @@
 import { NextFunction, Response } from "express";
 import { asyncWrapper } from "../utils/request-wrapper";
-import { BadRequestError } from "lucre-common"
+import { errors } from "lucre-common"
 import { responseHandler } from "../utils/response";
 import { IRequest } from "../utils/types";
 
@@ -10,7 +10,7 @@ function changePassword(req: IRequest, res: Response, next: NextFunction) {
   return asyncWrapper(async () => {
 
     if (!user.comparePassword(currentPassword))
-      throw new BadRequestError("Incorrect password");
+      throw new errors.BadRequestError("Incorrect password");
 
     user.password = newPassword;
     await user.save();
