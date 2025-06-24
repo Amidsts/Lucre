@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const __1 = __importDefault(require(".."));
-const logger_1 = __importDefault(require("../logger"));
+const lucre_common_1 = require("lucre-common");
 function connectDB() {
     return __awaiter(this, void 0, void 0, function* () {
         const options = {
@@ -22,7 +22,7 @@ function connectDB() {
         };
         try {
             yield mongoose_1.default.connect(__1.default.mongoDbUri, options);
-            logger_1.default.info("Connected to Database");
+            lucre_common_1.logger.info("Connected to Database");
         }
         catch (error) {
             throw Error(`Error connecting to database: ${error.message}`);

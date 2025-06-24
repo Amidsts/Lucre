@@ -8,15 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const redis_1 = require("redis");
-const logger_1 = __importDefault(require("../../logger"));
+const lucre_common_1 = require("lucre-common");
 class Redis {
     constructor() {
-        this._client = (0, redis_1.createClient)();
+        this._client = (0, redis_1.createClient)({ url: 'redis://redis-cache:6379' });
     }
     get Client() {
         if (this._client.isOpen) {
@@ -28,7 +25,7 @@ class Redis {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this._client.connect();
-                logger_1.default.info("connected to Redis!");
+                lucre_common_1.logger.info("connected to Redis!");
             }
             catch (error) {
                 if (error.code === "ECONNREFUSED")

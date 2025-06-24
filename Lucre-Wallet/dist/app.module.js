@@ -11,13 +11,14 @@ const common_1 = require("@nestjs/common");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const typeorm_1 = require("@nestjs/typeorm");
-const database_1 = require("./wallet/configs/database");
+const database_1 = require("./configs/database");
 const wallet_module_1 = require("./wallet/wallet.module");
+const users_module_1 = require("./users/users.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forRoot(database_1.dbConfig), wallet_module_1.WalletModule],
+        imports: [typeorm_1.TypeOrmModule.forRoot(database_1.dbConfig), wallet_module_1.WalletModule, users_module_1.UsersModule],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
     })

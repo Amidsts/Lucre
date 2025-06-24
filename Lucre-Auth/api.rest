@@ -1,4 +1,4 @@
-@server= http://localhost:3000
+@server= http://localhost:2000
 
 #### forgot password
 POST {{server}}/v1/auth/forgot-password
@@ -7,6 +7,23 @@ Content-Type: application/json
 {
     "email": "email@email.com"
 }
+
+
+#### signup
+POST {{server}}/v1/auth/signup
+Content-Type: application/json
+
+{
+    "email": "liqu@email.com",
+    "password": "3023abce$d2",
+    "firstName": "hero",
+    "lastName": "jame",
+    "phoneNo": "09066872122",
+    "confirmPassword": "3023abce$d2",
+    "address": "1, alien solo str",
+    "dateOfBirth": "12-02-2019"
+}
+
 
 
 ### Wallet

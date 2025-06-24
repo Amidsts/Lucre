@@ -14,16 +14,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const request_wrapper_1 = require("../utils/request-wrapper");
 const user_model_1 = __importDefault(require("../models/user.model"));
-const error_1 = require("../utils/error");
 const response_1 = require("../utils/response");
 const helpers_1 = require("../utils/helpers");
+const lucre_common_1 = require("lucre-common");
 const redis_config_1 = require("../configs/persistent/redis/redis-config");
 function sendOtp(req, res, next) {
     const { email } = req.body;
     return (0, request_wrapper_1.asyncWrapper)(() => __awaiter(this, void 0, void 0, function* () {
         let user = yield user_model_1.default.findOne({ email });
         if (!user)
-            throw new error_1.BadRequestError("an OTP was sent to your mail");
+            throw new lucre_common_1.errors.BadRequestError("an OTP was sent to your mail");
         const otp = (0, helpers_1.generateOtp)();
         yield (0, redis_config_1.setEx)(`forgot-password:${otp}`, otp);
         //publish forgot password event

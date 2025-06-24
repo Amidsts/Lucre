@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createWalletSchema = exports.ValidateInputPipe = void 0;
 const joi = require("joi");
+const common_1 = require("@nestjs/common");
 const wallet_interface_1 = require("../types/wallet.interface");
 class ValidateInputPipe {
     constructor(schema) {
@@ -10,8 +11,7 @@ class ValidateInputPipe {
     transform(data, _metadata) {
         const { error, value } = this.schema.validate(data);
         if (error) {
-            console.log(JSON.stringify(error.details[0]));
-            throw error;
+            throw new common_1.BadRequestException(`Validation failed ${error.details[0].message}`);
         }
         return value;
     }

@@ -19,6 +19,7 @@ function asyncWrapper(callback, next, session) {
         }
         catch (err) {
             if (err instanceof zod_1.ZodError) {
+                console.log(err);
                 next(Error(`${err.errors[0].path}: ${err.errors[0].message}`));
                 return;
             }

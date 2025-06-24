@@ -6,7 +6,7 @@ import UserModel from "../models/user.model";
 import { session } from "../test/setup";
 import AccountModel from "../models/account.model";
 import { userPayload } from "../test/test-helpers";
-import logger from "../configs/logger";
+import logger from "lucre-common";
 
 it("should throw an error that account already exists", async () => {
   const { payload } = userPayload();

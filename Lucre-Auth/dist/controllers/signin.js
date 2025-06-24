@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const request_wrapper_1 = require("../utils/request-wrapper");
 const user_model_1 = __importDefault(require("../models/user.model"));
-const error_1 = require("../utils/error");
+const lucre_common_1 = require("lucre-common");
 const helpers_1 = require("../utils/helpers");
 const response_1 = require("../utils/response");
 function signIn(req, res, next) {
@@ -22,9 +22,9 @@ function signIn(req, res, next) {
     return (0, request_wrapper_1.asyncWrapper)(() => __awaiter(this, void 0, void 0, function* () {
         let user = yield user_model_1.default.findOne({ email });
         if (!user)
-            throw new error_1.BadRequestError("Invalid credentials");
-        if (!(yield user.comparePassword(password)))
-            throw new error_1.BadRequestError("Invalid credentials");
+            throw new lucre_common_1.errors.BadRequestError("Invalid credentials");
+        if (!(user.comparePassword(password)))
+            throw new lucre_common_1.errors.BadRequestError("Invalid credentials");
         const token = (0, helpers_1.generateToken)({ id: user.id });
         return (0, response_1.responseHandler)({
             res,

@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const configs_1 = __importDefault(require("../configs"));
-const error_1 = require("../utils/error");
+const lucre_common_1 = require("lucre-common");
 const user_model_1 = __importDefault(require("../models/user.model"));
 const validateToken = (req, _res, next) => __awaiter(void 0, void 0, void 0, function* () {
     let token = req.headers.authorization;
@@ -24,11 +24,11 @@ const validateToken = (req, _res, next) => __awaiter(void 0, void 0, void 0, fun
     try {
         const decoded = jsonwebtoken_1.default.verify(token, configs_1.default.accessTokenSecret);
         if (!decoded)
-            throw new error_1.AuthenticationError("authentication is required");
+            throw new lucre_common_1.errors.AuthenticationError("authentication is required");
         const { id } = decoded;
         const user = yield user_model_1.default.findById(id);
         if (!user)
-            throw new error_1.AuthorizationError("authorization failed");
+            throw new lucre_common_1.errors.AuthorizationError("authorization failed");
         req.user = user;
         next();
     }

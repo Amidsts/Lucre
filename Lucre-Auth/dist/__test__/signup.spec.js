@@ -15,13 +15,23 @@ var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (
 }) : function(o, v) {
     o["default"] = v;
 });
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -40,7 +50,7 @@ const helpersModule = __importStar(require("../utils/helpers"));
 const app_1 = __importDefault(require("../configs/app"));
 const user_model_1 = __importDefault(require("../models/user.model"));
 const setup_1 = require("../test/setup");
-const account_mode_1 = __importDefault(require("../models/account.mode"));
+const account_model_1 = __importDefault(require("../models/account.model"));
 const test_helpers_1 = require("../test/test-helpers");
 it("should throw an error that account already exists", () => __awaiter(void 0, void 0, void 0, function* () {
     const { payload } = (0, test_helpers_1.userPayload)();
@@ -61,7 +71,7 @@ it("should save user and account to the database, call generateAccountNumber, th
         address: "12, Aln str. GRA",
         dateOfBirth: "12-02-2009",
     });
-    account_mode_1.default.prototype.save = jest.fn();
+    account_model_1.default.prototype.save = jest.fn();
     const res = yield (0, supertest_1.default)(app_1.default).post("/v1/auth/signup").send(payload);
     // logger.info("new user", res.body);
     user_model_1.default.prototype.save();
